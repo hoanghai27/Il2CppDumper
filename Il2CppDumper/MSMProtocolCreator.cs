@@ -23,7 +23,7 @@ namespace Il2CppDumper
         private List<MyClassInfo> filteredClasses = new List<MyClassInfo>();
 
 
-        public MSMProtocolCreator(Metadata metadata, Il2Cpp il2cpp)
+        public MSMProtocolCreator(Metadata metadata, Il2Cpp il2cpp, string outputPath)
         {
             this.metadata = metadata;
             this.il2cpp = il2cpp;
@@ -285,7 +285,7 @@ namespace Il2CppDumper
                 }
             }
             Console.WriteLine($"Filtered classes count: {filteredClasses.Count}");
-            FileStream writer = new FileStream("proto_classes.json", FileMode.Create);
+			FileStream writer = new FileStream(outputPath, FileMode.Create);
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<MyClassInfo>));
             ser.WriteObject(writer, filteredClasses);
             writer.Close();

@@ -17,8 +17,9 @@ namespace Il2CppDumper
         private static Config config;
         private static Dictionary<Il2CppMethodDefinition, string> methodModifiers = new Dictionary<Il2CppMethodDefinition, string>();
 
-        private const string il2cppPath = "F:\\bots\\MapleM\\base4\\lib\\x86\\libil2cpp.so";
-        private const string metadataPath = "F:\\bots\\MapleM\\base4\\assets\\bin\\Data\\Managed\\Metadata\\global-metadata.dat";
+		private const string il2cppPath = "libil2cpp.so"; // "/data/bots/MapleM/base4/lib/x86/libil2cpp.so";
+		private const string metadataPath = "global-metadata.dat"; // "/data/bots/MapleM/base4/assets/bin/Data/Managed/Metadata/global-metadata.dat";
+		private const string outputJsonPath = "protocol_classes.json";
 
         [STAThread]
         static void Main(string[] args)
@@ -135,7 +136,7 @@ namespace Il2CppDumper
                             //Directory.SetCurrentDirectory("DummyDll");
                             //File.WriteAllBytes("Il2CppDummyDll.dll", Resource1.Il2CppDummyDll);
                             Console.WriteLine("Searching for MSM protocol-related classes ...");
-                            var dummy = new MSMProtocolCreator(metadata, il2cpp);
+							var dummy = new MSMProtocolCreator(metadata, il2cpp, args.Length > 2 ? args[2] : outputJsonPath);
                             //foreach (var assembly in dummy.Assemblies)
                             //{
                             //    var stream = new MemoryStream();
