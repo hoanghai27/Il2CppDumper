@@ -256,7 +256,7 @@ namespace Il2CppDumper
 
                 var myClass = new MyClassInfo();
                 myClass.Name = typeDefinition.Name;
-                myClass.NameSpace = typeDefinition.DeclaringType == null ? "" : typeDefinition.DeclaringType.FullName;
+				myClass.NameSpace = typeDefinition.IsNested ? (typeDefinition.DeclaringType == null ? "" : typeDefinition.DeclaringType.FullName) : typeDefinition.Namespace;
                 foreach (var method in typeDefinition.Methods)
                 {
                     foreach (var param in method.Parameters)
@@ -277,6 +277,8 @@ namespace Il2CppDumper
                 }
                 if (myClass.ReadMethods.Count > 0 || myClass.WriteMethods.Count > 0)
                 {
+					if (myClass.NameSpace == "")
+                        Console.WriteLine($"Class {myClass.Name} has no namespace");
                     foreach (var field in typeDefinition.Fields)
                     {
                         myClass.Fields.Add(new MyFieldInfo(GetFieldOffset(field), field.Name, field.FieldType.FullName));
